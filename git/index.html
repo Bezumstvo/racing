@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- IE -->
+    <title>Гонки онлайн</title>
+    <link href="./css/style.css" rel="stylesheet">
+    <script src="./js/script.js"></script>
+</head>
+    <body>
+        <div class="score">0</div>
+        <div class="start">
+            <div class="info">
+                <p>Управление</p>
+                <p>W - вперед</p>
+                <p>S - назад</p>
+                <p>A - влево</p>
+                <p>D - вправо</p>
+                <p>Q - уменьшить скорость</p>
+                <p>E - увеличить скорость</p><br/>
+            </div>
+            <button>START</button>
+            <div class="main-overlay">
+                    <input type="checkbox" id="check1" checked />
+                    <label for="check1">&nbsp;</label>
+                    <div class="overlay">
+                        <p>Длинна трассы<input type="number" id="routeLength" value="40" /></p>
+                        <p>Количество блоков [0-10]<input type="number" id="difficult" value="5" /></p>
+                    </div>
+            </div>
+        </div>
+        <div class="game">
+                <div class="gameArea">
+                <div class="car" id="player1">
+                    <img src="./img/car.svg" alt="car" />
+                </div>
+                <div class="speed" id="speed">
+                </div>
+            </div>
+        </div>
+        <div class="game_over"><h2>GAME OVER</h2></div>
+        <div class="jostick">
+            <div class="jostick_block">&nbsp;</div>
+            <button class="jostick_block jostick_btn btnW"><p>W</p></button>
+            <div class="jostick_block">&nbsp;</div>
+            <button class="jostick_block jostick_btn btnA"><p>A</p></button>
+            <div class="jostick_block">&nbsp;</div>
+            <button class="jostick_block jostick_btn btnS"><p>D</p></button>
+            <div class="jostick_block">&nbsp;</div>
+            <button class="jostick_block jostick_btn btnD"><p>S</p></button>
+            <div class="jostick_block">&nbsp;</div>
+        </div>
+    </body>
+</html>
+        

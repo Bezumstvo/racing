@@ -1,0 +1,245 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+body, html {
+    overflow:hidden;
+    background: green;
+}
+
+.strips{
+    display:block;
+    position: absolute;
+    z-index:1;
+    width: 5px;
+    background-color:white;
+    transition-duration: 2s;
+    transition-timing-function: linear;
+}
+#player1 {
+    transition: all 0.5s ease-out;
+}
+.car {
+    display: flex;
+    position: absolute;
+    z-index:2;
+    max-height:10vh;
+    max-width:10vw;
+}
+.blocks {
+    display: flex;
+    position: absolute;
+    z-index:2;
+    height:20vh;
+    width:16vw;
+/*
+    background-color: #888888;
+*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+    transition-duration: 2s;
+    transition-timing-function: linear;
+}
+.speed {
+    display: flex;
+    position: absolute;
+    z-index:3;
+    top:0;
+    left:calc(100vw - 100px);
+    height:20px;
+    width:100px;
+    border:1px solid grey;
+    background-color: black; 
+    color:white;
+}
+.game_over{
+    z-index:4;
+    display:none;
+    position: absolute; 
+    top:0;
+    left:0;
+    width: 100vw;
+    height:100vh;
+    opacity: .85;
+    background-color: black;
+}
+.game_over h2{
+    color: red;
+    padding-left: 35vw;
+    padding-top: 20vh;
+}
+.score {
+    display:flex;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100px;
+    height:20px;
+    background-color:yellow;
+    color:black;
+    z-index:3;
+}
+.start {
+    display:block;
+    width:20vw;
+    height: 100vh;
+    float:right;
+    color:white;
+    background-color: rgb(56, 55, 56);
+    justify-content: center;
+}
+
+.start .info{
+    padding-left:20px;
+}
+
+.start button{
+    display:flex;
+    width: 100px;
+    height:100px;
+    border-radius: 50%;
+    background-color:red;
+    color:yellow;
+    justify-content: center;
+    font-size: 16px;
+    font-weight:900;
+    margin-left:30%;
+}
+
+.game {
+    display:flex;
+    width:80vw;
+    float:left;
+    background:#999999;
+}
+
+#check1 {
+    display:none;
+ }
+.main-overlay{
+    padding-left:20px;
+    padding-top:20px; 
+ }
+ input#routeLength, input#difficult{
+     width:30px;
+ }
+
+ #check1:checked~.overlay{
+    padding-top: 20px;
+    display: block;
+    height: 100px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: all .5s ease-out;
+  }
+  #check1:checked+label::before{
+    content: "Генератор уровней";
+  }
+  label::before{
+    content: "Записанный уровень";
+  }
+.start .overlay{
+    display: block;
+    height: 0px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: all .5s ease-out;
+  }
+  
+  .start .overlay:hover {
+    padding-top: 20px;
+    display: block;
+    height: 100px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: all .5s ease-out;
+  }
+ .jostick{
+    display: flex; 
+    position:absolute;
+    flex-wrap: wrap;
+    align-content: stretch;
+    opacity:.3;
+    top:20vw;
+    left:10vw;
+    width:70vw;
+    height:80vh; 
+    z-index:3;
+ }
+.jostick_btn{
+    background-color: aquamarine;
+}
+.jostick_block{
+    width:22vw;
+    height:27vh;
+    text-align: center;
+    align-content: center;
+}
+.jostick_btn p {
+    padding-top:0%;
+    font-size:20px;
+}
+@media (min-width:769px) {
+    .jostick_btn{
+        display:none;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .jostick_btn{
+        display:block;
+    }
+    .car img{
+        width: 28px;
+    }
+    .start .info{
+        padding-left:0px;
+    }
+    .start button{
+        width: 50px;
+        height:50px;
+        font-size: 13px;
+        font-weight:900;
+        margin-left:10%;
+    }
+    
+}
