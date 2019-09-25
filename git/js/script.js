@@ -103,7 +103,7 @@ function step() {
     const blocks=document.querySelectorAll(".blocks");
     let car=document.querySelector(".car");
     let finish = true; 
-    (iddqd) ? {car.style.zIndex='6';car.style.opacity=".7";}:{car.style.zIndex='2';car.style.opacity="1";};
+    if (iddqd) {car.style.zIndex='6';car.style.opacity=".7";}else{car.style.zIndex='2';car.style.opacity="1";};
     blocks.forEach(block=>{
       const top=parseInt(block.style.top);
       if (top<200) {finish=false;}
