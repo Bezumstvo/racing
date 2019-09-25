@@ -101,7 +101,9 @@ function step() {
     let timerDiv=document.querySelector('#speed');
     timerDiv.innerText=speed; 
     const blocks=document.querySelectorAll(".blocks");
+    let car=document.querySelector(".car");
     let finish = true; 
+    (iddqd) ? {car.style.zIndex='6';car.style.opacity=".7";}:{car.style.zIndex='2';car.style.opacity="1";};
     blocks.forEach(block=>{
       const top=parseInt(block.style.top);
       if (top<200) {finish=false;}
@@ -127,7 +129,21 @@ function step() {
       document.removeEventListener("touchend", drowNormalCar, false);
 
       document.querySelector('.game_over h2').style.color="green";
-      document.querySelector(".game_over h2").innerText = "YOU WIN! ваш счет:"+Math.round((parseInt(document.querySelector('.score').innerText)));
+      let bestScore = 0;
+      if(isSupported(window.localStorage)) {
+        bestScore = localStorage.bestScore;
+        console.log(!bestScore);
+        console.log(parseInt(document.querySelector('.score').innerText));
+        if (!bestScore || bestScore<parseInt(document.querySelector('.score').innerText)) {
+          console.log(!bestScore);
+          localStorage.bestScore= parseInt(document.querySelector('.score').innerText);
+          document.querySelector(".game_over h2").innerHTML = "YOU WIN! ваш счет:"+parseInt(document.querySelector('.score').innerText)+"<br/>ЭТО НОВЫЙ РЕКОРД!";
+        }else{
+          document.querySelector(".game_over h2").innerHTML = "YOU WIN! ваш счет:"+(parseInt(document.querySelector('.score').innerText))+"Рекорд: "+bestScore;
+        }
+      }else{
+        document.querySelector(".game_over h2").innerHTML = "YOU WIN! ваш счет:"+(parseInt(document.querySelector('.score').innerText));
+      }
       document.querySelector(".game_over").style.display = "block";
      }
 }
@@ -261,4 +277,15 @@ function generate_lvl(lines=25, difficult=10) {
       result.push({"line":res});
     }
   return result;
+}
+
+function isSupported(storage) {
+  try {
+    const key = "_123abc!@##@!cba321_";
+    storage.setItem(key, key);
+    storage.removeItem(key);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
