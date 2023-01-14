@@ -37,15 +37,15 @@ function initCar() {
     car.style.left='38'+'vw';
 }
 function initStrips(){
-  strips_num = Math.floor(document.documentElement.clientHeight / 10);
+  strips_num = 6;
   for(let j=0;j<5;j++){
       let leftofSet=j*16+"vw";
       for (let i=-2;i<=(strips_num+2);i++){
         let strip=document.createElement("div");
         strip.classList.add('strips');
-        strip.style.top=Math.floor(i*10)+"vh";
+        strip.style.top=Math.floor(i*20)+"vh";
         strip.style.left=leftofSet;
-        strip.style.height="8vh";
+        strip.style.height="10vh";
         document.querySelector('.gameArea').appendChild(strip);
       }
   }
@@ -86,7 +86,7 @@ function changeSpeed(val) {
     if (speed<=0) {speed=100; }
     if (speed>=2000) {speed=2000; }
     let timerDiv=document.querySelector('#speed');
-    timerDiv.innerText=speed; 
+    timerDiv.innerText=21-Math.floor(speed/100) ; 
     if (document.querySelector('.start button').innerText == 'STOP') {
       blocks=document.querySelectorAll(".blocks");
       blocks.forEach(block=>{
@@ -98,8 +98,6 @@ function changeSpeed(val) {
 }
 
 function step() {
-    let timerDiv=document.querySelector('#speed');
-    timerDiv.innerText=speed; 
     const blocks=document.querySelectorAll(".blocks");
     let car=document.querySelector(".car");
     let finish = true; 
@@ -112,15 +110,15 @@ function step() {
     const strips=document.querySelectorAll(".strips");
     strips.forEach(strip=>{
       let top=parseInt(strip.style.top);
-      if (top<0) {strip.style.display="block";}
-      if (top>(document.documentElement.clientHeight)) {top=-40; strip.style.display="none";} 
+      if (top<=-20) {strip.style.display="block";}
+      if (top>100) {top=-60; strip.style.display="none";} 
       strip.style.top=top+20+'vh';
     });
     check();
      if (finish) {  
       clearInterval(speedID);
       clearInterval(scoreID);
-      document.removeEventListener("keydown",handler, false);
+      /* document.removeEventListener("keydown",handler, false); */
       document.removeEventListener("keyup", drowNormalCar, false);
       let btnW = document.querySelector(".btnW"); if (btnW) {btnW.removeEventListener("touchstart",screenHandler); }
       let btnS = document.querySelector(".btnS"); if (btnS) {btnS.removeEventListener("touchstart",screenHandler); }
@@ -132,10 +130,7 @@ function step() {
       let bestScore = 0;
       if(isSupported(window.localStorage)) {
         bestScore = localStorage.bestScore;
-        console.log(!bestScore);
-        console.log(parseInt(document.querySelector('.score').innerText));
         if (!bestScore || bestScore<parseInt(document.querySelector('.score').innerText)) {
-          console.log(!bestScore);
           localStorage.bestScore= parseInt(document.querySelector('.score').innerText);
           document.querySelector(".game_over h2").innerHTML = "YOU WIN! ваш счет:"+parseInt(document.querySelector('.score').innerText)+"<br/>ЭТО НОВЫЙ РЕКОРД!";
         }else{
@@ -162,7 +157,7 @@ function check() {
       if (result) {
         clearInterval(speedID);
         clearInterval(scoreID);
-        document.removeEventListener("keydown",handler, false);
+        /* document.removeEventListener("keydown",handler, false); */
         document.removeEventListener("keyup", drowNormalCar, false);
         let btnW = document.querySelector(".btnW"); if (btnW) {btnW.removeEventListener("touchstart",screenHandler); }
         let btnS = document.querySelector(".btnS"); if (btnS) {btnS.removeEventListener("touchstart",screenHandler); }
@@ -192,6 +187,8 @@ function handler(e) {
       case 'KeyD' : carRight(car); break;
       case 'KeyQ' : changeSpeed(100); break;
       case 'KeyE' : changeSpeed(-100); break;
+      case 'Escape' : if (document.querySelector(".game_over").style.display == "block") { clearBoard(); } break;
+      case 'Space' : if (document.querySelector(".game_over").style.display == "none") { startGame(); } break;
       default: break;
     }
 }
@@ -223,22 +220,7 @@ window.onload = function() {
     let btnD = document.querySelector(".btnD"); if (btnD) {btnD.addEventListener("touchstart",screenHandler); }
     document.addEventListener("touchend", drowNormalCar);
     
-    document.querySelector('.start button').addEventListener('click', function(){
-      if (document.querySelector('.start button').innerText === 'START') {
-            initMap();
-            speedID = setInterval(function(){step()},speed);
-            scoreID = setInterval(function(){
-              let difficult = document.querySelector('#difficult').value;
-              if (!difficult) {difficult = 5;}
-              let score = document.querySelector('.score');
-              score.innerText = Math.round(parseInt(score.innerText) + ((5000-speed)*difficult)/1000);
-            },100);         
-            document.querySelector('.start button').innerText = 'STOP';
-      }else{
-            clearInterval(speedID);
-            document.querySelector('.start button').innerText = 'START';
-      }
-    })
+    document.querySelector('.start button').addEventListener('click', startGame());
 }
 
 function clearBoard(){
@@ -262,6 +244,23 @@ function clearBoard(){
     initStrips();
 }
 
+function startGame() {
+  if (document.querySelector('.start button').innerText === 'START') {
+    initMap();
+    speedID = setInterval(function(){step()},speed);
+    scoreID = setInterval(function(){
+      let difficult = document.querySelector('#difficult').value;
+      if (!difficult) {difficult = 5;}
+      let score = document.querySelector('.score');
+      score.innerText = Math.round(parseInt(score.innerText) + ((2000-speed)*difficult)/100);
+    },100);         
+      document.querySelector('.start button').innerText = 'STOP';
+    }else{
+        clearInterval(scoreID);
+        clearInterval(speedID);
+        document.querySelector('.start button').innerText = 'START';
+    }
+}
 function generate_lvl(lines=25, difficult=10) {
   if (lines<0) {lines=25;}
   if ((difficult<0)||(difficult>10)) {difficult=5;}
